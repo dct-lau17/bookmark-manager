@@ -1,11 +1,23 @@
+require 'bookmark'
+
 describe Bookmark do
   describe '.all' do
-    it 'returns all bookmarks' do
-      bookmarks = Bookmark.all
+    it 'returns all bookmarks in an array' do
+      connection = PG.connect(dbname: 'bookmark_manager_test')
 
-      expect(bookmarks).to include "http://makersacademy.com"
-      expect(bookmarks).to include "http://amazon.co.uk"
-      expect(bookmarks).to include "http://google.com"
+      # Add test data
+      connection.exec("INSERT INTO bookmarks (url) VALUES ('http://google.com');")
+      connection.exec("INSERT INTO bookmarks (url) VALUES('http://amazon.co.uk');")
+      connection.exec("INSERT INTO bookmarks (url) VALUES('http://makersacademy.com');")
+
+      expected_bookmarks = [
+        'http://google.com',
+        'http://amazon.co.uk',
+        'http://makersacademy.com'
+      ]
+
+      expect(Bookmark.all).to eq expected_bookmarks
+
     end
   end
 end

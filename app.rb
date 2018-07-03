@@ -8,6 +8,8 @@ get '/' do
 end
 
 get '/bookmark' do
+  p ENV['PWD']
+  p ENV['RUBY_VERSION']
   @bookmarks = Bookmark.all
   erb(:index)
 end
