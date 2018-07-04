@@ -10,4 +10,5 @@ feature 'Viewing bookmarks' do
     expect(page).to have_content 'http://amazon.co.uk'
     expect(page).to have_content 'http://makersacademy.com'
   end
+
 end

@@ -16,4 +16,11 @@ feature 'Adding a new bookmark' do
     expect(page).to have_content 'You must submit a valid URL.'
   end
 
+  scenario 'User can add bookmarks from /bookmark screen' do
+    visit('/bookmarks')
+    click_button('Create a Bookmark')
+
+    expect(page).to have_button('Add Bookmark')
+  end
+
 end

@@ -17,8 +17,7 @@ class Bookmark
     end
 
     result = connection.exec("SELECT * FROM bookmarks")
-    p "all"
-    p result.map { |bookmark| Bookmark.new(bookmark['id'], bookmark['url']) }
+      result.map { |bookmark| Bookmark.new(bookmark['id'], bookmark['url']) }
   end
 
   def self.create(options)
@@ -30,8 +29,6 @@ class Bookmark
 
     return false unless is_url?(options[:url])
     result = connection.exec("INSERT INTO bookmarks (url) VALUES('#{options[:url]}') RETURNING id, url")
-    p result
-    p "create"
     Bookmark.new(result.first['id'], result.first['url'])
   end
 

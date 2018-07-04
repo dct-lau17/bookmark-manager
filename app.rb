@@ -25,7 +25,7 @@ register Sinatra::Flash
     if Bookmark.create(url: params['url'])
       redirect '/bookmarks'
     else
-      flash[:notice] = "You must submit a valid URL."
+      flash[:error] = "You must submit a valid URL."
       redirect '/bookmarks/new'
     end
   end
