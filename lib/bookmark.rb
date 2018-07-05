@@ -17,8 +17,8 @@ class Bookmark
       connection = PG.connect(dbname: 'bookmark_manager')
     end
 
-    p result = connection.exec("SELECT * FROM bookmarks")
-    p  result.map { |bookmark| Bookmark.new(bookmark['id'], bookmark['url'], bookmark['title']) }
+    result = connection.exec("SELECT * FROM bookmarks")
+    result.map { |bookmark| Bookmark.new(bookmark['id'], bookmark['url'], bookmark['title']) }
   end
 
   def self.create(options)
@@ -31,6 +31,15 @@ class Bookmark
     return false unless is_url?(options[:url])
     result = connection.exec("INSERT INTO bookmarks (url, title) VALUES('#{options[:url]}', '#{options[:title]}') RETURNING id, url, title")
     Bookmark.new(result.first['id'], result.first['url'], result.first['title'])
+  end
+
+  def self.delete(id)
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+    connection.exec("DELETE FROM bookmarks WHERE id = #{id}")
   end
 
   def ==(other)

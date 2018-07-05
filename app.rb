@@ -4,6 +4,7 @@ require './lib/bookmark'
 
 
 class BookmarkManager < Sinatra::Base
+set :method_override, true
 
 enable :sessions
 register Sinatra::Flash
@@ -28,6 +29,11 @@ register Sinatra::Flash
       flash[:error] = "You must submit a valid URL."
       redirect '/bookmarks/new'
     end
+  end
+
+  delete '/bookmarks/:id' do
+    Bookmark.delete(params['id'])
+    redirect '/bookmarks'
   end
 
 
