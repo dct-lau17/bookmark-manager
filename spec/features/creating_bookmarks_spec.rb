@@ -2,13 +2,15 @@ feature 'Adding a new bookmark' do
 
   scenario 'A user can add a bookmark to Bookmark Manager' do
     visit('/bookmarks/new')
+    fill_in('title', with: 'Testing URL')
     fill_in('url', with: 'http://thebookmarkfortesting.com')
     click_button('Add Bookmark')
-    expect(page).to have_content 'http://thebookmarkfortesting.com'
+    expect(page).to have_content 'Testing URL'
   end
 
   scenario 'The bookmark must be a valid URL' do
     visit('/bookmarks/new')
+    fill_in('title', with: 'Invalid URL')
     fill_in('url', with: 'unqualified bookmark')
     click_button('Add Bookmark')
 
@@ -19,7 +21,6 @@ feature 'Adding a new bookmark' do
   scenario 'User can add bookmarks from /bookmark screen' do
     visit('/bookmarks')
     click_button('Create a Bookmark')
-
     expect(page).to have_button('Add Bookmark')
   end
 
