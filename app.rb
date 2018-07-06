@@ -36,6 +36,20 @@ register Sinatra::Flash
     redirect '/bookmarks'
   end
 
+  get '/bookmarks/:id/edit' do
+    @bookmark_id = params['id']
+    erb :'bookmarks/edit'
+  end
+
+  patch '/bookmarks/:id' do
+    if Bookmark.update(params['id'], params)
+      redirect '/bookmarks'
+    else
+      flash[:error] = "You must submit a valid URL."
+      redirect '/bookmarks/:id/edit'
+    end
+  end
+
 
 run! if app_file == $0
 

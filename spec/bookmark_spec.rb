@@ -38,16 +38,27 @@ describe Bookmark do
     end
   end
 
-  # describe '.delete' do
-  #   it 'deletes a bookmark' do
-  #     Bookmark.create("http://www.makersacademy.com")
-  #     Bookmark.delete(1)
-  #
-  #     bookmarks = Bookmark.all
-  #     urls = bookmarks.map(&:url)
-  #
-  #     expect(urls).not_to include "http://www.makersacademy.com"
-  #   end
-  # end
+  describe '.delete' do
+    it 'deletes a bookmark' do
+      bookmark = Bookmark.create(url: 'http://www.makersacademy.com', title: 'Makers')
+      Bookmark.delete(bookmark.id)
 
+      expect(Bookmark.all).not_to include bookmark
+    end
+  end
+
+  describe '.update' do
+    it 'updates a bookmark' do
+      bookmark = Bookmark.create(url: 'http://yazoo.com', title: 'Yazoo')
+      Bookmark.update(bookmark.id, url: 'http://www.yahoo.com', title: 'Yahoo')
+      bookmarks = Bookmark.all
+      urls = bookmarks.map(&:url)
+      titles = bookmarks.map(&:title)
+
+      expect(urls).not_to include 'http://yazoo.com'
+      expect(titles).not_to include 'Yazoo'
+      expect(urls).to include 'http://www.yahoo.com'
+      expect(titles).to include 'Yahoo'
+    end
+  end
 end

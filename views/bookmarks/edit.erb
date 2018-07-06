@@ -1,0 +1,9 @@
+<form action="/bookmarks/<%= @bookmark_id %>" method="post">
+  <input type="hidden" name="id" value="<%= @bookmark_id %>">
+  <input type="text" name="title" placeholder="Enter new title"/>
+  <input type="text" name="url" placeholder="Enter new url"/>
+  <input type="hidden" name="_method" value="patch">
+  <input type="submit" value="Update me!" />
+</form>
+
+<%= styled_flash %>
